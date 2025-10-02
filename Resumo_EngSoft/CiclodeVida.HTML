@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ciclo de Vida do Software</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2980b9;
+      margin-top: 0;
+    }
+    .icon {
+      margin-right: 8px;
+      color: #27ae60;
+    }
+    .example {
+      background: #ecf0f1;
+      border-left: 5px solid #2980b9;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-style: italic;
+    }
+    code {
+      display: block;
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-family: Consolas, monospace;
+    }
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+  </style>
+  <!-- Ícones via CDN -->
+  <script src="https://kit.fontawesome.com/your-key.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <h1>📘 Ciclo de Vida do Software</h1>
+
+  <section>
+    <h2><i class="fas fa-search icon"></i> 1. Levantamento de Requisitos</h2>
+    <p>Descobrir o que o cliente/usuário realmente precisa.</p>
+    <div class="example">
+      Exemplo: O cliente quer um app Android para <strong>anotar tarefas</strong> e receber <strong>notificações diárias</strong>.
+    </div>
+    <code>
+      Requisitos:
+      - Adicionar tarefa
+      - Editar tarefa
+      - Receber notificação
+    </code>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-clipboard-list icon"></i> 2. Análise de Requisitos</h2>
+    <p>Transformar as necessidades em modelos/documentos técnicos.</p>
+    <div class="example">
+      Exemplo: Criar um caso de uso “Usuário insere tarefa com título, descrição e data”.
+    </div>
+    <code>
+      Caso de Uso: Inserir Tarefa
+      Ator: Usuário
+      Fluxo: Preenche título, descrição, data → Salva → Tarefa listada
+    </code>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-drafting-compass icon"></i> 3. Projeto/Design</h2>
+    <p>Planejar a arquitetura, interface e banco de dados.</p>
+    <div class="example">
+      Exemplo:  
+      - Tela de lista de tarefas + botão "Adicionar"  
+      - Arquitetura: MVVM  
+      - Banco: SQLite/Room  
+    </div>
+    <code>
+      class Task {<br>
+          int id;<br>
+          String titulo;<br>
+          String descricao;<br>
+          Date data;<br>
+      }<br>
+    </code>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-code icon"></i> 4. Implementação</h2>
+    <p>Escrever o código de acordo com o design.</p>
+    <div class="example">
+      Exemplo: Criar Activity e Repository no Android Studio.
+    </div>
+    <code>
+      public class TaskRepository {
+          private TaskDao taskDao;
+          
+          public void addTask(Task task) {
+              taskDao.insert(task);
+          }
+      }
+    </code>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-vial icon"></i> 5. Testes</h2>
+    <p>Garantir que o software funciona conforme esperado.</p>
+    <div class="example">
+      Exemplo: Testar se "Adicionar Tarefa" realmente exibe a tarefa na lista.
+    </div>
+    <code>
+      @Test
+      public void testAdicionarTarefa() {
+          Task task = new Task("Estudar Java");
+          repository.addTask(task);
+          assertTrue(repository.getAll().contains(task));
+      }
+    </code>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-cloud-upload-alt icon"></i> 6. Implantação</h2>
+    <p>Disponibilizar o software para uso.</p>
+    <div class="example">
+      Exemplo: Publicar o app na <strong>Google Play Store</strong>.
+    </div>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-tools icon"></i> 7. Manutenção</h2>
+    <p>Corrigir erros, atualizar funcionalidades e melhorar o sistema.</p>
+    <div class="example">
+      Exemplo: Usuários reclamaram que a notificação não toca em modo silencioso → corrigir e lançar versão 1.1.
+    </div>
+  </section>
+
+</body>
+</html>

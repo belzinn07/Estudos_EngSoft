@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquiteturas de Software</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+  }
+  section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  h2 {
+    color: #2980b9;
+    margin-top: 0;
+  }
+  .icon {
+    margin-right: 8px;
+    color: #27ae60;
+  }
+  ul, ol {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  .example {
+    background: #ecf0f1;
+    border-left: 5px solid #2980b9;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-style: italic;
+  }
+  code {
+    display: block;
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-family: Consolas, monospace;
+  }
+  .diagram {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .diagram-box {
+    width: 150px;
+    height: 60px;
+    background: #ecf0f1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+  }
+  .line {
+    width: 50px;
+    height: 2px;
+    background: #2980b9;
+  }
+</style>
+<!-- Font Awesome para ícones -->
+<script src="https://kit.fontawesome.com/your-key.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h1>🏗 Arquiteturas de Software</h1>
+
+<section>
+  <h2><i class="fas fa-lightbulb icon"></i> Definição</h2>
+  <p>Arquitetura de software é a <strong>estrutura organizacional do sistema</strong>, mostrando como os componentes se relacionam, como os dados fluem e como o sistema atende aos requisitos.</p>
+</section>
+
+<section>
+  <h2><i class="fas fa-th-large icon"></i> Tipos de Arquitetura</h2>
+
+  <h3>1. Monolítica</h3>
+<p>Todo o sistema é construído como uma única aplicação.</p>
+
+<div class="example">
+Exemplo prático:
+<ul>
+  <li>App Android simples de lista de tarefas, onde a Activity faz tudo:</li>
+  <ul>
+    <li>Recebe input do usuário</li>
+    <li>Salva no banco de dados (Room)</li>
+    <li>Atualiza a interface (RecyclerView)</li>
+  </ul>
+  <li>Backend simples: um único serviço que processa autenticação, tarefas e notificações dentro do mesmo código</li>
+</ul>
+Vantagem: fácil de começar; desvantagem: difícil de escalar e manter.
+</div>
+
+<code>
+// Monolítico backend Java<br>
+public class AppMonolitica {<br>
+    public static void main(String[] args) {<br>
+        autenticarUsuario();<br>
+        gerenciarTarefas();<br>
+        enviarNotificacoes();<br>
+    }<br>
+}
+</code>
+
+
+
+  <h3>2. Em Camadas (Layered / N-Tier)</h3>
+  <p>Sistema dividido em camadas, cada uma com responsabilidade específica.</p>
+ 
+ 
+  <ul>
+    <li>Apresentação (UI)</li> 
+    <p><strong> Função: </strong> Exibir informações e receber interações do usuário.</p>
+    <p><strong>Responsabilidade:</strong> Não deve conter regras de negócio, apenas apresentar dados da ViewModel e enviar comandos de volta.</p>
+    <p><strong> Exemplos em Android: </strong></p>
+
+     <li>Activity ou Fragment
+</li>
+<li>RecyclerView mostrando lista de tarefas</li>
+<li>Botões, EditText, CheckBox</li>
+
+
+<code>
+// Em Camadas - Activity mostrando lista de tarefas
+public class TaskListActivity extends AppCompatActivity {<br>
+    private TaskViewModel taskViewModel;<br>
+<br>
+    @Override<br>
+    protected void onCreate(Bundle savedInstanceState) {<br>
+        super.onCreate(savedInstanceState);<br>
+        setContentView(R.layout.activity_task_list);<br>
+<br>
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);<br>
+<br>
+        taskViewModel.getAllTasks().observe(this, tasks -> {<br>
+            // Atualiza RecyclerView com a lista de tarefas<br>
+        });<br>
+    }<br>
+}
+</code>
+
+
+  </code><br>
+    <li>Negócio (Business Logic/ViewModel)</li>
+    <p><strong>Função: </strong>Contém a lógica do aplicativo, regras de negócio e manipulação de dados.</p>
+
+
+    <p><strong>Responsabilidade:</strong> Não deve ter dependência direta com a UI ou o banco de dados. Deve atuar como intermediário entre ambos.</p>
+
+    <p><strong> Exemplos em Android: </strong></p>
+    <li>ViewModel (Android Architecture Components) que gerencia dados entre Repository e UI</li>
+    <li>Regras como "não permitir tarefa sem título"</li>
+
+   <code>
+    // ViewModel - manipula dados e lógica<br>
+public class TaskViewModel extends ViewModel {<br>
+    private TaskRepository repository;<br>
+    private LiveData<List<Task>> allTasks;<br>
+
+    public TaskViewModel(Application app){<br>
+        repository = new TaskRepository(app);<br>
+        allTasks = repository.getAllTasks();<br>
+    }
+
+    public void addTask(Task task){<br>
+        repository.addTask(task);<br>
+    }<br>
+}
+    <br>
+   </code><br>
+   <p><strong>O que é o ViewModel? De onde ele vem?</strong></p>
+    <p>O ViewModel é uma classe do Android Architecture Components que ajuda a gerenciar dados relacionados à UI de forma eficiente, sobrevivendo a mudanças de configuração como rotações de tela.</p>
+    <p>Por que estender o ViewModel?</p>
+    <li>Mantém os dados mesmo quando a Activity ou Fragment é recriada (ex.: rotação da tela)</li>
+    <li>Evita que a UI manipule diretamente o banco de dados ou lógica</li>
+    <li>Permite observar os dados com LiveData e atualizar a interface automaticamente</li>
+
+<br>
+    
+    <li>Persistência / Dados</li>
+  </ul>
+
+  <p><strong>Função: </strong>Gerenciar o acesso aos dados, como banco de dados ou API externa.</p>
+    <p><strong>Responsabilidade:</strong> Não deve conter lógica de negócio ou manipulação direta da UI. Deve fornecer uma interface para o ViewModel acessar os dados.</p>
+    <p><strong> Exemplos em Android: </strong></p>
+     <li>Repository que abstrai o acesso ao banco de dados (Room) ou rede (Retrofit)</li>
+     <li>DAO (Data Access Object) para operações CRUD no banco</li>
+
+     <div class="example">
+    Exemplo: App Android usando MVVM: UI → ViewModel → Repository/DAO → Banco (Room)
+  </div>
+    <code>
+    // Repository - abstrai acesso a dados<br>  
+  public class TaskRepository {<br>
+    private TaskDao taskDao;<br>
+<br>
+    public TaskRepository(Application app){<br>
+        TaskDatabase db = TaskDatabase.getDatabase(app);<br>
+        taskDao = db.taskDao();<br>
+    }<br>
+<br>
+    public void addTask(Task task){<br>
+        new Thread(() -> taskDao.insert(task)).start();<br>
+    }<br>
+<br>
+    public LiveData<List<Task>> getAllTasks(){<br>
+        return taskDao.getAllTasks();<br>
+    }<br>
+}
+
+    </code>    
+<br>
+     <div class="example">
+    <H4>Diagrama visual simplificado</H4>
+  </div> 
+  <div class="diagram">
+    <div style="text-align:center;">
+      <strong>UI (View)</strong>
+      <div class="diagram-box">Tela do usuário</div>
+    </div>
+    <div class="line"></div>
+    <div style="text-align:center;">
+      <strong>ViewModel</strong>
+      <div class="diagram-box">Lógica de negócio</div>
+    </div>
+    <div class="line"></div>
+    <div style="text-align:center;">
+      <strong>Repository/DAO</strong>
+      <div class="diagram-box">Banco de dados</div>
+    </div>
+  </div>
+
+  <h3>3. Microserviços</h3>
+  <p>Sistema dividido em serviços independentes, cada um cuidando de uma funcionalidade.</p>
+  <div class="example">
+    Exemplo prático: Backend com serviços separados:
+    <ul>
+      <li><strong>Auth Service:</strong> autenticação de usuários (Login, Logout)</li>
+      <li><strong>Task Service:</strong> gerenciamento de tarefas (CRUD, prioridades)</li>
+      <li><strong>Notification Service:</strong> envia notificações para usuários</li>
+    </ul>
+    Cada serviço pode ter seu próprio banco de dados e escalar independentemente.
+  </div>
+  <code>
+[Auth Service]  [Tasks Service]  [Notification Service]
+        \          |               /
+                  Frontend / App Android
+                        Usuário
+  </code>
+
+  <h3>4. Orientada a Eventos (Event-Driven)</h3>
+  <p>Sistema reage a eventos de forma assíncrona, permitindo que diferentes componentes se comuniquem sem dependência direta.</p>
+  <div class="example">
+    Exemplo prático:  
+    - Usuário adiciona uma tarefa no app → dispara evento <strong>"Nova Tarefa"</strong>  
+    - Notification Service envia alerta  
+    - Analytics Service atualiza relatórios  
+    - Outros serviços podem reagir ao mesmo evento sem alterar o código do app principal
+  </div>
+  <code>
+App Android --> Evento "Nova Tarefa" --> Notification Service
+                                    --> Analytics Service
+                                    --> Outros serviços
+  </code>
+
+
+</section>
+
+<section>
+  <h2><i class="fas fa-lightbulb icon"></i> Quando usar cada arquitetura</h2>
+  <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width:100%; text-align:center;">
+    <tr>
+      <th>Arquitetura</th>
+      <th>Quando usar</th>
+    </tr>
+    <tr>
+      <td>Monolítica</td>
+      <td>Apps pequenos, início rápido</td>
+    </tr>
+    <tr>
+      <td>Camadas</td>
+      <td>Sistemas médios/grandes, manutenção importante</td>
+    </tr>
+    <tr>
+      <td>Microserviços</td>
+      <td>Sistemas grandes, escalabilidade necessária</td>
+    </tr>
+    <tr>
+      <td>Event-Driven</td>
+      <td>Sistemas que precisam reagir a eventos em tempo real</td>
+    </tr>
+  </table>
+</section>
+
+</body>
+</html>
