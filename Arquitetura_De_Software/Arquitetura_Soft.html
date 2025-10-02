@@ -74,215 +74,187 @@
     background: #2980b9;
   }
 </style>
-<!-- Font Awesome para ícones -->
-<script src="https://kit.fontawesome.com/your-key.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <h1>🏗 Arquiteturas de Software</h1>
 
 <section>
-  <h2><i class="fas fa-lightbulb icon"></i> Definição</h2>
+  <h2>💡 Definição</h2>
   <p>Arquitetura de software é a <strong>estrutura organizacional do sistema</strong>, mostrando como os componentes se relacionam, como os dados fluem e como o sistema atende aos requisitos.</p>
 </section>
 
 <section>
-  <h2><i class="fas fa-th-large icon"></i> Tipos de Arquitetura</h2>
+  <h2>📚 Tipos de Arquitetura</h2>
 
   <h3>1. Monolítica</h3>
-<p>Todo o sistema é construído como uma única aplicação.</p>
-
-<div class="example">
-Exemplo prático:
-<ul>
-  <li>App Android simples de lista de tarefas, onde a Activity faz tudo:</li>
-  <ul>
-    <li>Recebe input do usuário</li>
-    <li>Salva no banco de dados (Room)</li>
-    <li>Atualiza a interface (RecyclerView)</li>
-  </ul>
-  <li>Backend simples: um único serviço que processa autenticação, tarefas e notificações dentro do mesmo código</li>
-</ul>
-Vantagem: fácil de começar; desvantagem: difícil de escalar e manter.
-</div>
-
-<code>
-// Monolítico backend Java<br>
+  <p>Todo o sistema é construído como uma única aplicação.</p>
+  <div class="example">
+    Exemplo prático: Sistema de tarefas simples, tudo dentro do mesmo programa.<br>
+    Vantagem: fácil de começar<br>
+    Desvantagem: difícil de escalar e manter
+  </div>
+  <code>
+// Monolítico Java<br>
 public class AppMonolitica {<br>
+<br>
     public static void main(String[] args) {<br>
-        autenticarUsuario();<br>
-        gerenciarTarefas();<br>
-        enviarNotificacoes();<br>
+        AppMonolitica app = new AppMonolitica();<br>
+        app.autenticarUsuario();<br>
+        app.gerenciarTarefas();<br>
+        app.enviarNotificacoes();<br>
+    }<br>
+<br>
+    private void autenticarUsuario() {<br>
+        System.out.println("Autenticando usuário...");<br>
+    }<br>
+<br>
+    private void gerenciarTarefas() {<br>
+        System.out.println("Gerenciando tarefas...");<br>
+    }<br>
+<br>
+    private void enviarNotificacoes() {<br>
+        System.out.println("Enviando notificações...");<br>
     }<br>
 }
-</code>
-
-
+  </code>
 
   <h3>2. Em Camadas (Layered / N-Tier)</h3>
   <p>Sistema dividido em camadas, cada uma com responsabilidade específica.</p>
- 
- 
   <ul>
-    <li>Apresentação (UI)</li> 
-    <p><strong> Função: </strong> Exibir informações e receber interações do usuário.</p>
-    <p><strong>Responsabilidade:</strong> Não deve conter regras de negócio, apenas apresentar dados da ViewModel e enviar comandos de volta.</p>
-    <p><strong> Exemplos em Android: </strong></p>
-
-     <li>Activity ou Fragment
-</li>
-<li>RecyclerView mostrando lista de tarefas</li>
-<li>Botões, EditText, CheckBox</li>
-
-
-<code>
-// Em Camadas - Activity mostrando lista de tarefas
-public class TaskListActivity extends AppCompatActivity {<br>
-    private TaskViewModel taskViewModel;<br>
-<br>
-    @Override<br>
-    protected void onCreate(Bundle savedInstanceState) {<br>
-        super.onCreate(savedInstanceState);<br>
-        setContentView(R.layout.activity_task_list);<br>
-<br>
-        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);<br>
-<br>
-        taskViewModel.getAllTasks().observe(this, tasks -> {<br>
-            // Atualiza RecyclerView com a lista de tarefas<br>
-        });<br>
-    }<br>
-}
-</code>
-
-
-  </code><br>
-    <li>Negócio (Business Logic/ViewModel)</li>
-    <p><strong>Função: </strong>Contém a lógica do aplicativo, regras de negócio e manipulação de dados.</p>
-
-
-    <p><strong>Responsabilidade:</strong> Não deve ter dependência direta com a UI ou o banco de dados. Deve atuar como intermediário entre ambos.</p>
-
-    <p><strong> Exemplos em Android: </strong></p>
-    <li>ViewModel (Android Architecture Components) que gerencia dados entre Repository e UI</li>
-    <li>Regras como "não permitir tarefa sem título"</li>
-
-   <code>
-    // ViewModel - manipula dados e lógica<br>
-public class TaskViewModel extends ViewModel {<br>
-    private TaskRepository repository;<br>
-    private LiveData<List<Task>> allTasks;<br>
-
-    public TaskViewModel(Application app){<br>
-        repository = new TaskRepository(app);<br>
-        allTasks = repository.getAllTasks();<br>
-    }
-
-    public void addTask(Task task){<br>
-        repository.addTask(task);<br>
-    }<br>
-}
-    <br>
-   </code><br>
-   <p><strong>O que é o ViewModel? De onde ele vem?</strong></p>
-    <p>O ViewModel é uma classe do Android Architecture Components que ajuda a gerenciar dados relacionados à UI de forma eficiente, sobrevivendo a mudanças de configuração como rotações de tela.</p>
-    <p>Por que estender o ViewModel?</p>
-    <li>Mantém os dados mesmo quando a Activity ou Fragment é recriada (ex.: rotação da tela)</li>
-    <li>Evita que a UI manipule diretamente o banco de dados ou lógica</li>
-    <li>Permite observar os dados com LiveData e atualizar a interface automaticamente</li>
-
-<br>
-    
-    <li>Persistência / Dados</li>
+    <li>Apresentação (UI)</li>
+    <p>Função: exibir informações e receber input do usuário.</p>
+    <p>Exemplo Java puro:</p>
   </ul>
-
-  <p><strong>Função: </strong>Gerenciar o acesso aos dados, como banco de dados ou API externa.</p>
-    <p><strong>Responsabilidade:</strong> Não deve conter lógica de negócio ou manipulação direta da UI. Deve fornecer uma interface para o ViewModel acessar os dados.</p>
-    <p><strong> Exemplos em Android: </strong></p>
-     <li>Repository que abstrai o acesso ao banco de dados (Room) ou rede (Retrofit)</li>
-     <li>DAO (Data Access Object) para operações CRUD no banco</li>
-
-     <div class="example">
-    Exemplo: App Android usando MVVM: UI → ViewModel → Repository/DAO → Banco (Room)
-  </div>
-    <code>
-    // Repository - abstrai acesso a dados<br>  
-  public class TaskRepository {<br>
-    private TaskDao taskDao;<br>
+  <code>
+// Camada de Apresentação<br>
+public class TelaTarefas {<br>
+    private TarefaController controller;<br>
 <br>
-    public TaskRepository(Application app){<br>
-        TaskDatabase db = TaskDatabase.getDatabase(app);<br>
-        taskDao = db.taskDao();<br>
+    public void mostrarTarefas() {<br>
+        System.out.println(controller.obterTodas());<br>
     }<br>
 <br>
-    public void addTask(Task task){<br>
-        new Thread(() -> taskDao.insert(task)).start();<br>
-    }<br>
-<br>
-    public LiveData<List<Task>> getAllTasks(){<br>
-        return taskDao.getAllTasks();<br>
+    public void adicionarTarefa(String titulo) {<br>
+        controller.criarTarefa(titulo);<br>
     }<br>
 }
+  </code>
 
-    </code>    
+  <ul>
+    <li>Negócio (Business Logic / Controller)</li>
+    <p>Função: regras do sistema, validações.</p>
+  </ul>
+  <code>
+// Camada de Negócio<br>
+public class TarefaController {<br>
+    private TarefaRepository repository;<br>
 <br>
-     <div class="example">
-    <H4>Diagrama visual simplificado</H4>
-  </div> 
-  <div class="diagram">
-    <div style="text-align:center;">
-      <strong>UI (View)</strong>
-      <div class="diagram-box">Tela do usuário</div>
-    </div>
-    <div class="line"></div>
-    <div style="text-align:center;">
-      <strong>ViewModel</strong>
-      <div class="diagram-box">Lógica de negócio</div>
-    </div>
-    <div class="line"></div>
-    <div style="text-align:center;">
-      <strong>Repository/DAO</strong>
-      <div class="diagram-box">Banco de dados</div>
-    </div>
-  </div>
+    public TarefaController(TarefaRepository repo) {<br>
+        this.repository = repo;<br>
+    }<br>
+<br>
+    public void criarTarefa(String titulo) {<br>
+        if(titulo == null || titulo.isEmpty()) {<br>
+            System.out.println("Erro: título obrigatório");<br>
+            return;<br>
+        }<br>
+        repository.salvar(new Tarefa(titulo));<br>
+    }<br>
+<br>
+    public String obterTodas() {<br>
+        return repository.listarTodas().toString();<br>
+    }<br>
+}
+  </code>
+
+  <ul>
+    <li>Persistência / Dados</li>
+    <p>Função: acesso a dados.</p>
+  </ul>
+  <code>
+// Camada de Dados<br>
+import java.util.ArrayList;<br>
+import java.util.List;<br>
+<br>
+public class TarefaRepository {<br>
+    private List<Tarefa> tarefas = new ArrayList<>();<br>
+<br>
+    public void salvar(Tarefa t) {<br>
+        tarefas.add(t);<br>
+    }<br>
+<br>
+    public List<Tarefa> listarTodas() {<br>
+        return tarefas;<br>
+    }<br>
+}<br>
+<br>
+public class Tarefa {<br>
+    private String titulo;<br>
+    public Tarefa(String titulo) {<br>
+        this.titulo = titulo;<br>
+    }<br>
+    public String toString() {<br>
+        return titulo;<br>
+    }<br>
+}
+  </code>
 
   <h3>3. Microserviços</h3>
   <p>Sistema dividido em serviços independentes, cada um cuidando de uma funcionalidade.</p>
   <div class="example">
-    Exemplo prático: Backend com serviços separados:
-    <ul>
-      <li><strong>Auth Service:</strong> autenticação de usuários (Login, Logout)</li>
-      <li><strong>Task Service:</strong> gerenciamento de tarefas (CRUD, prioridades)</li>
-      <li><strong>Notification Service:</strong> envia notificações para usuários</li>
-    </ul>
-    Cada serviço pode ter seu próprio banco de dados e escalar independentemente.
+    Exemplo prático: AuthService, TaskService, NotificationService, cada um com sua própria classe e dados.
   </div>
   <code>
-[Auth Service]  [Tasks Service]  [Notification Service]
-        \          |               /
-                  Frontend / App Android
-                        Usuário
+// Microserviços Java puro<br>
+public class AuthService {<br>
+    public void autenticar() {<br>
+        System.out.println("Autenticando usuário...");<br>
+    }<br>
+}<br>
+<br>
+public class TaskService {<br>
+    public void criarTarefa(String titulo) {<br>
+        System.out.println("Criando tarefa: " + titulo);<br>
+    }<br>
+}<br>
+<br>
+public class NotificationService {<br>
+    public void enviarNotificacao(String msg) {<br>
+        System.out.println("Notificação: " + msg);<br>
+    }<br>
+}
   </code>
 
-  <h3>4. Orientada a Eventos (Event-Driven)</h3>
-  <p>Sistema reage a eventos de forma assíncrona, permitindo que diferentes componentes se comuniquem sem dependência direta.</p>
+  <h3>4. Event-Driven (Orientada a Eventos)</h3>
+  <p>Sistema reage a eventos de forma assíncrona.</p>
   <div class="example">
-    Exemplo prático:  
-    - Usuário adiciona uma tarefa no app → dispara evento <strong>"Nova Tarefa"</strong>  
-    - Notification Service envia alerta  
-    - Analytics Service atualiza relatórios  
-    - Outros serviços podem reagir ao mesmo evento sem alterar o código do app principal
+    Exemplo prático: quando uma tarefa é criada, dispara evento e outros serviços reagem.
   </div>
   <code>
-App Android --> Evento "Nova Tarefa" --> Notification Service
-                                    --> Analytics Service
-                                    --> Outros serviços
+// Event-Driven Java puro<br>
+public interface EventListener {<br>
+    void onEvento(String evento);<br>
+}<br>
+<br>
+public class NotificationListener implements EventListener {<br>
+    public void onEvento(String evento) {<br>
+        System.out.println("NotificationService recebeu: " + evento);<br>
+    }<br>
+}<br>
+<br>
+public class AppEventDriven {<br>
+    public static void main(String[] args) {<br>
+        NotificationListener listener = new NotificationListener();<br>
+        String evento = "Nova Tarefa Criada";<br>
+        listener.onEvento(evento);<br>
+    }<br>
+}
   </code>
-
-
 </section>
 
 <section>
-  <h2><i class="fas fa-lightbulb icon"></i> Quando usar cada arquitetura</h2>
+  <h2>🕹 Quando usar cada arquitetura</h2>
   <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width:100%; text-align:center;">
     <tr>
       <th>Arquitetura</th>

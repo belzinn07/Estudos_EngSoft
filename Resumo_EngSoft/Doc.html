@@ -11,9 +11,11 @@
       margin: 0;
       padding: 20px;
     }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
     h1 {
       text-align: center;
-      color: #2c3e50;
     }
     section {
       background: #fff;
@@ -22,16 +24,12 @@
       margin-bottom: 20px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-    h2 {
-      color: #2980b9;
-      margin-top: 0;
-    }
     .icon {
       font-size: 22px;
       margin-right: 8px;
       color: #27ae60;
     }
-    ul {
+    ul, ol {
       margin: 10px 0;
       padding-left: 20px;
     }
@@ -43,7 +41,6 @@
       border-radius: 5px;
       font-style: italic;
     }
-
     code {
       display: block;
       background: #2d2d2d;
@@ -52,278 +49,211 @@
       border-radius: 6px;
       margin-top: 10px;
       font-family: Consolas, monospace;
+      white-space: pre-line;
     }
-
     .diagram {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-  }
-
-  .actor {
-    width: 80px;
-    text-align: center;
-    font-weight: bold;
-    margin-right: 40px;
-  }
-
-  .actor .icon {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 5px;
-    color: #27ae60;
-  }
-
-  .usecase {
-    width: 180px;
-    height: 80px;
-    background: #ecf0f1;
-    border: 2px solid #2980b9;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-  }
-
-  .line {
-    width: 40px;
-    height: 2px;
-    background: #2980b9;
-    margin: 0 10px;
-  }
-
-
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .diagram-box {
+      width: 150px;
+      height: 60px;
+      background: #ecf0f1;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      text-align: center;
+    }
+    .line {
+      width: 50px;
+      height: 2px;
+      background: #2980b9;
+    }
   </style>
-  <!-- Ícones do Font Awesome -->
   <script src="https://kit.fontawesome.com/your-key.js" crossorigin="anonymous"></script>
 </head>
-<script src="https://kit.fontawesome.com/your-key.js" crossorigin="anonymous"></script>
 <body>
 
-  <h1>📘 Engenharia de Software</h1>
-
-  <section>
-    <h2><i class="fas fa-lightbulb icon"></i> Definição</h2>
-    <p>Engenharia de Software é a disciplina que aplica <strong>princípios, métodos e ferramentas</strong> da engenharia no desenvolvimento e manutenção de sistemas de software.</p>
-  </section>
-
-  <section>
-    <h2><i class="fas fa-sitemap icon"></i> Objetivos</h2>
-    <ul>
-      <li>Produzir software de <strong>alta qualidade</strong>;</li>
-      <li>Reduzir custos de manutenção;</li>
-      <li>Garantir que o software seja <strong>confiável</strong> e <strong>escalável</strong>.</li>
-    </ul>
-  </section>
-
-  
-  <h1>📘 Ciclo de Vida do Software</h1>
-
-  <section>
-    <h2><i class="fas fa-search icon"></i> 1. Levantamento de Requisitos</h2>
-    <p>Descobrir o que o cliente/usuário realmente precisa.</p>
-    <div class="example">
-      Exemplo: O cliente quer um app Android para <strong>anotar tarefas</strong> e receber <strong>notificações diárias</strong>.
-    </div>
-    <code>
-      Requisitos:
-      - Adicionar tarefa
-      - Editar tarefa
-      - Receber notificação
-    </code>
-  </section>
-
-  <section>
-    <h2><i class="fas fa-clipboard-list icon"></i> 2. Análise de Requisitos</h2>
-    <p>Transformar as necessidades em modelos/documentos técnicos.</p>
-    <div class="example">
-      Exemplo: Criar um caso de uso “Usuário insere tarefa com título, descrição e data”.
-    </div>
-      <h1>Caso de Uso</h1>
-    <p>Um caso de uso é uma forma de descrever como um usuário (ou <strong>“ator”</strong>) vai interagir com um sistema para atingir um objetivo específico. Ele ajuda a entender o que o software precisa fazer sem entrar ainda no código.</p>
-
-    <h2>Estrutura básica de um caso de uso</h2>
-    <ul>
-        <li><strong>Ator:</strong> quem está usando o sistema (usuário, administrador, outro sistema).</li>
-        <li><strong>Objetivo:</strong> o que o ator quer alcançar.</li>
-        <li><strong>Fluxo principal:</strong> passo a passo do que acontece normalmente.</li>
-        <li><strong>Fluxos alternativos:</strong> o que acontece em situações diferentes ou erros.</li>
-    </ul>
-
-    <h2>Exemplo rápido (App de tarefas)</h2>
-    <p><strong>Ator:</strong> Usuário</p>
-    <p><strong>Objetivo:</strong> Adicionar uma nova tarefa</p>
-
-    <h3>Fluxo principal:</h3>
-    <ol>
-        <li>Usuário abre a tela de tarefas</li>
-        <li>Clica em “Adicionar”</li>
-        <li>Preenche título e descrição</li>
-        <li>Salva a tarefa</li>
-    </ol>
-
-    <h3>Fluxo alternativo:</h3>
-    <p>Usuário tenta salvar sem título → mostra mensagem de erro</p>
-   <h1>📝 Caso de Uso - Adicionar Tarefa</h1>
-
-<div class="diagram">
-  <div class="actor">
-    <span class="icon"><i class="fas fa-user"></i></span>
-    Usuário
-  </div>
-  <div class="line"></div>
-  <div class="usecase">
-    Adicionar nova tarefa
-  </div>
-</div>
-  </section>
-
- <h1>🛠 Projeto / Design - Engenharia de Software</h1>
+<h1>📘 Engenharia de Software</h1>
 
 <section>
   <h2><i class="fas fa-lightbulb icon"></i> Definição</h2>
-  <p>Planejar <strong>como o sistema será construído</strong>, definindo arquitetura, interface e banco de dados antes da implementação.</p>
+  <p>Engenharia de Software é a disciplina que aplica <strong>princípios, métodos e ferramentas</strong> para projetar, desenvolver, testar e manter sistemas de software de forma eficiente e organizada.</p>
 </section>
 
 <section>
   <h2><i class="fas fa-sitemap icon"></i> Objetivos</h2>
   <ul>
-    <li>Organizar o software de forma <strong>modular e escalável</strong>;</li>
-    <li>Evitar retrabalho na implementação;</li>
-    <li>Definir fluxo de dados e interação com o usuário.</li>
+    <li>Produzir software de <strong>alta qualidade</strong>;</li>
+    <li>Reduzir custos de manutenção;</li>
+    <li>Garantir que o software seja <strong>confiável</strong> e <strong>escalável</strong>.</li>
   </ul>
 </section>
 
-<section>
-  <h2><i class="fas fa-project-diagram icon"></i> Componentes principais</h2>
-  <ul>
-    <li><b>Arquitetura do software:</b> Monolito, em camadas, MVVM (Android)</li>
-    <li><b>Design de interface (UI/UX):</b> Wireframes, protótipos, layouts</li>
-    <li><b>Modelagem de dados:</b> Classes, entidades e banco de dados</li>
-  </ul>
-</section>
+<h1>📘 Ciclo de Vida do Software</h1>
 
 <section>
-  <h2><i class="fas fa-code icon"></i> Exemplos práticos (Android)</h2>
+  <h2><i class="fas fa-search icon"></i> 1. Levantamento de Requisitos</h2>
+  <p>Identificar e documentar as necessidades do usuário e do sistema.</p>
   <div class="example">
-    Tela de lista de tarefas (RecyclerView), Tela de adicionar tarefa (EditText + botão "Salvar"), Arquitetura MVVM, Banco Room
+    Exemplo: Cliente deseja um sistema em Java para <strong>gerenciar tarefas e prioridades</strong>.
+  </div>
+  <code>
+Requisitos:
+- Adicionar tarefa
+- Editar tarefa
+- Marcar como concluída
+- Listar todas as tarefas
+  </code>
+</section>
+
+<section>
+  <h2><i class="fas fa-clipboard-list icon"></i> 2. Análise de Requisitos</h2>
+  <p>Transformar necessidades em modelos e documentos técnicos.</p>
+  <div class="example">
+    Exemplo: Caso de uso “Usuário adiciona tarefa com título, descrição e data”.
+  </div>
+  <h3>Caso de Uso</h3>
+  <ul>
+    <li><strong>Ator:</strong> Usuário</li>
+    <li><strong>Objetivo:</strong> Adicionar nova tarefa</li>
+    <li><strong>Fluxo principal:</strong> Usuário preenche título e descrição → Sistema salva tarefa</li>
+    <li><strong>Fluxo alternativo:</strong> Usuário tenta salvar sem título → Sistema mostra erro</li>
+  </ul>
+</section>
+
+<section>
+  <h2><i class="fas fa-project-diagram icon"></i> 3. Projeto / Design</h2>
+  <p>Definir como o sistema será construído: arquitetura, componentes, interfaces e banco de dados.</p>
+  <ul>
+    <li><strong>Arquitetura:</strong> Monolítica, em camadas ou modular</li>
+    <li><strong>Design de interface:</strong> Layouts, menus, fluxo de tela</li>
+    <li><strong>Modelagem de dados:</strong> Classes e estruturas de armazenamento</li>
+  </ul>
+</section>
+
+<section>
+  <h2><i class="fas fa-code icon"></i> 4. Exemplos Práticos (Java)</h2>
+  <div class="example">
+    Sistema console de tarefas usando Java puro:
+    - Model: Task
+    - Controller: TaskController
+    - Repository: TaskRepository
   </div>
 
-  <h3>Código - Model/Entidade</h3>
+  <h3>Código - Model / Entidade</h3>
   <code>
-@Entity<br>
-<br>
-public class Task {<br>
-    <br>
-    @PrimaryKey(autoGenerate = true)<br>
-    public int id;<br>
-    public String titulo;<br>
-    public String descricao;<br>
-    public Date data;<br>
+import java.util.Date;
+
+public class Task {
+    public int id;
+    public String titulo;
+    public String descricao;
+    public Date data;
+
+    public Task(int id, String titulo, String descricao, Date data) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.data = data;
+    }
+
+    public String toString() {
+        return "Task [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", data=" + data + "]";
+    }
 }
   </code>
 
-  <h3>Código - ViewModel</h3>
+  <h3>Código - Controller / Lógica</h3>
   <code>
-public class TaskViewModel extends ViewModel {<br>
-    <br>
-    private TaskRepository repository;<br>
-    private LiveData&lt;List&lt;Task&gt;&gt; allTasks;<br>
-<br>  
-    public TaskViewModel(Application app){<br>
-        repository = new TaskRepository(app);<br>
-        allTasks = repository.getAllTasks();<br>
-    }<br>
+import java.util.List;
 
-    public void addTask(Task task){<br>
-        repository.addTask(task);<br>
-    }<br>
-}<br>
+public class TaskController {
+    private TaskRepository repository;
+
+    public TaskController(TaskRepository repo) {
+        this.repository = repo;
+    }
+
+    public void addTask(Task task) {
+        repository.save(task);
+    }
+
+    public List<Task> getAllTasks() {
+        return repository.findAll();
+    }
+}
+  </code>
+
+  <h3>Código - Repository / Persistência</h3>
+  <code>
+import java.util.ArrayList;
+import java.util.List;
+
+public class TaskRepository {
+    private List<Task> tasks = new ArrayList<>();
+
+    public void save(Task task) {
+        tasks.add(task);
+    }
+
+    public List<Task> findAll() {
+        return tasks;
+    }
+}
   </code>
 </section>
 
 <section>
-  <h2><i class="fas fa-project-diagram icon"></i> Diagrama Simplificado</h2>
-  <div class="diagram">
-    <div style="text-align:center;">
-      <strong>UI (View)</strong>
-      <div class="diagram-box">Tela do usuário</div>
-    </div>
-    <div class="line"></div>
-    <div style="text-align:center;">
-      <strong>ViewModel</strong>
-      <div class="diagram-box">Lógica de negócio</div>
-    </div>
-    <div class="line"></div>
-    <div style="text-align:center;">
-      <strong>Repository/DAO</strong>
-      <div class="diagram-box">Banco de dados</div>
-    </div>
+  <h2><i class="fas fa-vial icon"></i> 5. Testes</h2>
+  <p>Verificar se o software funciona conforme o esperado.</p>
+  <div class="example">
+    Testar se “Adicionar Tarefa” realmente insere a tarefa na lista.
+  </div>
+  <code>
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class TaskTest {
+    @Test
+    public void testAdicionarTarefa() {
+        TaskRepository repo = new TaskRepository();
+        Task task = new Task(1, "Estudar Java", "Revisar conceitos", new Date());
+        repo.save(task);
+        assertTrue(repo.findAll().contains(task));
+    }
+}
+  </code>
+</section>
+
+<section>
+  <h2><i class="fas fa-cloud-upload-alt icon"></i> 6. Implantação</h2>
+  <p>Disponibilizar o software para uso real.</p>
+  <div class="example">
+    Exemplo: Distribuir arquivo .jar ou publicar sistema web Java.
   </div>
 </section>
 
+<section>
+  <h2><i class="fas fa-tools icon"></i> 7. Manutenção</h2>
+  <p>Corrigir erros, atualizar funcionalidades e melhorar o sistema.</p>
+  <div class="example">
+    Exemplo: Usuários solicitam relatório diário → Implementar nova função e atualizar sistema.
+  </div>
+</section>
 
-  <section>
-    <h2><i class="fas fa-code icon"></i> 4. Implementação</h2>
-    <p>Escrever o código de acordo com o design.</p>
-    <div class="example">
-      Exemplo: Criar Activity e Repository no Android Studio.
-    </div>
-    <code>
-      public class TaskRepository {
-          private TaskDao taskDao;
-          
-          public void addTask(Task task) {
-              taskDao.insert(task);
-          }
-      }
-    </code>
-  </section>
-
-  <section>
-    <h2><i class="fas fa-vial icon"></i> 5. Testes</h2>
-    <p>Garantir que o software funciona conforme esperado.</p>
-    <div class="example">
-      Exemplo: Testar se "Adicionar Tarefa" realmente exibe a tarefa na lista.
-    </div>
-    <code>
-      @Test
-      public void testAdicionarTarefa() {
-          Task task = new Task("Estudar Java");
-          repository.addTask(task);
-          assertTrue(repository.getAll().contains(task));
-      }
-    </code>
-  </section>
-
-  <section>
-    <h2><i class="fas fa-cloud-upload-alt icon"></i> 6. Implantação</h2>
-    <p>Disponibilizar o software para uso.</p>
-    <div class="example">
-      Exemplo: Publicar o app na <strong>Google Play Store</strong>.
-    </div>
-  </section>
-
-  <section>
-    <h2><i class="fas fa-tools icon"></i> 7. Manutenção</h2>
-    <p>Corrigir erros, atualizar funcionalidades e melhorar o sistema.</p>
-    <div class="example">
-      Exemplo: Usuários reclamaram que a notificação não toca em modo silencioso → corrigir e lançar versão 1.1.
-    </div>
-  </section>
-
-  <section>
-    <h2><i class="fas fa-check-circle icon"></i> Benefícios</h2>
-    <ul>
-      <li>Melhora a organização do projeto;</li>
-      <li>Facilita a colaboração em equipe;</li>
-      <li>Evita retrabalho desnecessário.</li>
-    </ul>
-  </section>
+<section>
+  <h2><i class="fas fa-check-circle icon"></i> Benefícios</h2>
+  <ul>
+    <li>Organização do projeto e do código;</li>
+    <li>Facilita colaboração em equipe;</li>
+    <li>Reduz retrabalho e erros no desenvolvimento.</li>
+  </ul>
+</section>
 
 </body>
 </html>
