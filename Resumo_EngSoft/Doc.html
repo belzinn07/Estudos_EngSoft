@@ -93,159 +93,139 @@
     <li>Garantir que o software seja <strong>confiável</strong> e <strong>escalável</strong>.</li>
   </ul>
 </section>
-
-<h1>📘 Ciclo de Vida do Software</h1>
-
 <section>
-  <h2><i class="fas fa-search icon"></i> 1. Levantamento de Requisitos</h2>
-  <p>Identificar e documentar as necessidades do usuário e do sistema.</p>
-  <div class="example">
-    Exemplo: Cliente deseja um sistema em Java para <strong>gerenciar tarefas e prioridades</strong>.
-  </div>
-  <code>
-Requisitos:
-- Adicionar tarefa
-- Editar tarefa
-- Marcar como concluída
-- Listar todas as tarefas
-  </code>
+    <h2><i class="fas fa-search icon"></i> 1. Levantamento de Requisitos</h2>
+    <p>Descobrir o que o cliente/usuário realmente precisa.</p>
+    <div class="example">
+      Exemplo: O cliente quer um app Android para <strong>anotar tarefas</strong> e receber <strong>notificações diárias</strong>.
+    </div>
+    <code>
+      Requisitos:
+      - Adicionar tarefa
+      - Editar tarefa
+      - Receber notificação
+    </code>
+  </section>
+
+  <section>
+    <h2><i class="fas fa-clipboard-list icon"></i> 2. Análise de Requisitos</h2>
+    <p>Transformar as necessidades em modelos/documentos técnicos.
+       Compreender fluxos, casos de uso e regras de negócio.
+
+    </p>
+
+      <section>
+   <h2><i class=" fas fa-tools icon" > O que é um Caso de Uso ?</i></h2>
+    <p>Um Caso de Uso é uma descrição detalhada de como um usuário interage com um sistema para alcançar um objetivo específico. Ele define as funcionalidades do sistema do ponto de vista do usuário, ajudando a capturar os requisitos funcionais e a entender o comportamento esperado do sistema.</p>
+
+     <div class="example"> Estrutura de um caso  de uso: </div>
+    <code>
+      Caso de Uso: [Nome do Caso de Uso]<br>
+      Ator: [Quem interage com o sistema]<br>
+      Fluxo Principal:<br>
+      1. [Passo 1]<br>
+      2. [Passo 2]<br>
+      ...<br>
+      Fluxos Alternativos: 
+      A1. [Passo alternativo 1]<br>
+      A2. [Passo alternativo 2]<br>
+      ...<br>
+      Pré-condições: [O que deve ser verdadeiro antes de iniciar o caso de uso]<br>
+      Pós-condições: [O que deve ser verdadeiro após a conclusão do caso de uso]<br>
+    </code>
+
+
+    <h3> O que é um Fluxo Alternativo ?</h3>
+    <p>Fluxos alternativos são variações ou caminhos diferentes que podem ser seguidos
+    dentro de um caso de uso, dependendo das condições ou decisões tomadas durante a interação do usuário com o sistema. Eles descrevem situações que desviam do fluxo principal, como erros, exceções ou escolhas alternativas feitas pelo usuário.</p>
+
+
+
+
+
+
 </section>
 
-<section>
-  <h2><i class="fas fa-clipboard-list icon"></i> 2. Análise de Requisitos</h2>
-  <p>Transformar necessidades em modelos e documentos técnicos.</p>
-  <div class="example">
-    Exemplo: Caso de uso “Usuário adiciona tarefa com título, descrição e data”.
-  </div>
-  <h3>Caso de Uso</h3>
-  <ul>
-    <li><strong>Ator:</strong> Usuário</li>
-    <li><strong>Objetivo:</strong> Adicionar nova tarefa</li>
-    <li><strong>Fluxo principal:</strong> Usuário preenche título e descrição → Sistema salva tarefa</li>
-    <li><strong>Fluxo alternativo:</strong> Usuário tenta salvar sem título → Sistema mostra erro</li>
-  </ul>
-</section>
 
-<section>
-  <h2><i class="fas fa-project-diagram icon"></i> 3. Projeto / Design</h2>
-  <p>Definir como o sistema será construído: arquitetura, componentes, interfaces e banco de dados.</p>
-  <ul>
-    <li><strong>Arquitetura:</strong> Monolítica, em camadas ou modular</li>
-    <li><strong>Design de interface:</strong> Layouts, menus, fluxo de tela</li>
-    <li><strong>Modelagem de dados:</strong> Classes e estruturas de armazenamento</li>
-  </ul>
-</section>
+    <div class="example">
+      Exemplo: Criar um caso de uso “Usuário insere tarefa com título, descrição e data” e validar campos.
+    </div>
+    <code>
+      Caso de Uso: Inserir Tarefa
+      Ator: Usuário
+      Fluxo: Preenche título, descrição, data → Salva → Tarefa listada
+      Fluxo alternativo: Deixa título vazio → Erro "Título obrigatório"
+    </code>
+  </section>
 
-<section>
-  <h2><i class="fas fa-code icon"></i> 4. Exemplos Práticos (Java)</h2>
-  <div class="example">
-    Sistema console de tarefas usando Java puro:
-    - Model: Task
-    - Controller: TaskController
-    - Repository: TaskRepository
-  </div>
+  <section>
+    <h2><i class="fas fa-drafting-compass icon"></i> 3. Projeto/Design</h2>
+    <p>Planejar a arquitetura, interface e banco de dados.</p>
+    <div class="example">
+      Exemplo:  
+      - Tela de lista de tarefas + botão "Adicionar"  
+      - Arquitetura: MVVM  
+      - Banco: SQLite/Room  
+    </div>
+    <code>
+      Diagrama de Componentes:
+      [UI] -- (ViewModel) -- [Repository] -- [Database]
+    </code>
+  </section>
 
-  <h3>Código - Model / Entidade</h3>
-  <code>
-import java.util.Date;
+  <section>
+    <h2><i class="fas fa-code icon"></i> 4. Implementação</h2>
+    <p>Escrever o código de acordo com o design.</p>
+    <div class="example">
+      Exemplo: Criar Activity e Repository no Android Studio.
+    </div>
+    <code>
+// Criar Activity
+import...
 
-public class Task {
-    public int id;
-    public String titulo;
-    public String descricao;
-    public Date data;
-
-    public Task(int id, String titulo, String descricao, Date data) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.data = data;
-    }
-
-    public String toString() {
-        return "Task [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", data=" + data + "]";
-    }
+public class MainActivity extends AppCompatActivity {<br>
+    //conteúdo de criação da activity...
 }
-  </code>
 
-  <h3>Código - Controller / Lógica</h3>
-  <code>
-import java.util.List;
-
-public class TaskController {
-    private TaskRepository repository;
-
-    public TaskController(TaskRepository repo) {
-        this.repository = repo;
-    }
-
-    public void addTask(Task task) {
-        repository.save(task);
-    }
-
-    public List<Task> getAllTasks() {
-        return repository.findAll();
-    }
+//Criar Repository<br>
+public class TarefaRepository {<br>
+    //conteúdo do repository...
 }
-  </code>
 
-  <h3>Código - Repository / Persistência</h3>
-  <code>
-import java.util.ArrayList;
-import java.util.List;
+    </code>
+  </section>
 
-public class TaskRepository {
-    private List<Task> tasks = new ArrayList<>();
+  <section>
+    <h2><i class="fas fa-vial icon"></i> 5. Testes</h2>
+    <p>Garantir que o software funciona conforme esperado.</p>
+    <div class="example">
+      Exemplo: Testar se "Adicionar Tarefa" realmente exibe a tarefa na lista.
+    </div>
+    <code>
+      @Test
+      public void testAdicionarTarefa() {
+          Task task = new Task("Estudar Java");
+          repository.addTask(task);
+          assertTrue(repository.getAll().contains(task));
+      }
+    </code>
+  </section>
 
-    public void save(Task task) {
-        tasks.add(task);
-    }
+  <section>
+    <h2><i class="fas fa-cloud-upload-alt icon"></i> 6. Implantação</h2>
+    <p>Disponibilizar o software para uso.</p>
+    <div class="example">
+      Exemplo: Publicar o app na <strong>Google Play Store</strong>.
+    </div>
+  </section>
 
-    public List<Task> findAll() {
-        return tasks;
-    }
-}
-  </code>
-</section>
-
-<section>
-  <h2><i class="fas fa-vial icon"></i> 5. Testes</h2>
-  <p>Verificar se o software funciona conforme o esperado.</p>
-  <div class="example">
-    Testar se “Adicionar Tarefa” realmente insere a tarefa na lista.
-  </div>
-  <code>
-import static org.junit.Assert.*;
-import org.junit.Test;
-
-public class TaskTest {
-    @Test
-    public void testAdicionarTarefa() {
-        TaskRepository repo = new TaskRepository();
-        Task task = new Task(1, "Estudar Java", "Revisar conceitos", new Date());
-        repo.save(task);
-        assertTrue(repo.findAll().contains(task));
-    }
-}
-  </code>
-</section>
-
-<section>
-  <h2><i class="fas fa-cloud-upload-alt icon"></i> 6. Implantação</h2>
-  <p>Disponibilizar o software para uso real.</p>
-  <div class="example">
-    Exemplo: Distribuir arquivo .jar ou publicar sistema web Java.
-  </div>
-</section>
-
-<section>
-  <h2><i class="fas fa-tools icon"></i> 7. Manutenção</h2>
-  <p>Corrigir erros, atualizar funcionalidades e melhorar o sistema.</p>
-  <div class="example">
-    Exemplo: Usuários solicitam relatório diário → Implementar nova função e atualizar sistema.
-  </div>
-</section>
-
+  <section>
+    <h2><i class="fas fa-tools icon"></i> 7. Manutenção</h2>
+    <p>Corrigir erros, atualizar funcionalidades e melhorar o sistema.</p>
+    <div class="example">
+      Exemplo: Usuários reclamaram que a notificação não toca em modo silencioso → corrigir e lançar versão 1.1.
+    </div>
+  </section>
 <section>
   <h2><i class="fas fa-check-circle icon"></i> Benefícios</h2>
   <ul>
@@ -254,6 +234,8 @@ public class TaskTest {
     <li>Reduz retrabalho e erros no desenvolvimento.</li>
   </ul>
 </section>
+
+
 
 </body>
 </html>

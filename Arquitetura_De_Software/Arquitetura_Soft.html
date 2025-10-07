@@ -87,169 +87,182 @@
 <section>
   <h2>📚 Tipos de Arquitetura</h2>
 
-  <h3>1. Monolítica</h3>
-  <p>Todo o sistema é construído como uma única aplicação.</p>
-  <div class="example">
-    Exemplo prático: Sistema de tarefas simples, tudo dentro do mesmo programa.<br>
-    Vantagem: fácil de começar<br>
-    Desvantagem: difícil de escalar e manter
-  </div>
-  <code>
-// Monolítico Java<br>
-public class AppMonolitica {<br>
-<br>
-    public static void main(String[] args) {<br>
-        AppMonolitica app = new AppMonolitica();<br>
-        app.autenticarUsuario();<br>
-        app.gerenciarTarefas();<br>
-        app.enviarNotificacoes();<br>
-    }<br>
-<br>
-    private void autenticarUsuario() {<br>
-        System.out.println("Autenticando usuário...");<br>
-    }<br>
-<br>
-    private void gerenciarTarefas() {<br>
-        System.out.println("Gerenciando tarefas...");<br>
-    }<br>
-<br>
-    private void enviarNotificacoes() {<br>
-        System.out.println("Enviando notificações...");<br>
-    }<br>
-}
-  </code>
-
-  <h3>2. Em Camadas (Layered / N-Tier)</h3>
-  <p>Sistema dividido em camadas, cada uma com responsabilidade específica.</p>
   <ul>
-    <li>Apresentação (UI)</li>
-    <p>Função: exibir informações e receber input do usuário.</p>
-    <p>Exemplo Java puro:</p>
+    <li><h2><i class="fas fa-lightbulb icon"></i> Monolítica</h2>  Tudo em um único bloco. Fácil de desenvolver, mas difícil de escalar e manter.</li>
+     
+    <li>
+      <strong>Exemplo prático (Monolítica):</strong>
+      <div class="example">
+      Um programa Kotlin simples de lista de tarefas, onde tudo está em um único arquivo: interface, lógica e dados.
+      </div>
+      <code>
+      // Exemplo didático em Kotlin (console)<br>
+      fun main() { <br>
+        <br>
+          val tarefas = mutableListOf<String>()<br>
+          while (true) {<br>
+          println("1 - Adicionar tarefa")<br>
+          println("2 - Listar tarefas")<br>
+          println("0 - Sair")<br>
+          <br>
+          when (readLine()) {<br>
+          "1" -> {<br>
+              print("Descrição da tarefa: ")<br>
+              val tarefa = readLine() ?: ""<br>
+              tarefas.add(tarefa)<br>
+              println("Tarefa adicionada!")<br>
+          }<br>
+          "2" -> {<br>
+              println("Tarefas:")<br>
+              tarefas.forEach { println("- $it") }<br>
+          }<br>
+          "0" -> return<br>
+          else -> println("Opção inválida")<br>
+          }<br>
+          }<br>
+      }<br>
+      </code>
+      
+      <div class="diagram">
+        <div class="diagram-box">Interface + Lógica + Dados</div>
+        <div class="line"></div>
+      </div>
+
+        </div>
+        
+    </li>
+
+    <li><h2><i class="fas fa-tools icon"></i> Camadas</h2> Dividida em camadas (ex: apresentação, lógica, dados). Facilita manutenção e escalabilidade.</li>
+    <div class="example">
+      Um sistema de tarefas onde a interface (console), as regras (não adicionar tarefa vazia) e o armazenamento (lista em memória) estão em classes separadas.
+    </div>
+    <h3> Camada de Dados (Repository) </h3>
+    <p>Responsável por salvar e buscar os dados.</p>
+    <code>
+      
+      class TaskRepository {<br>
+          private val tasks = mutableListOf&lt;String&gt;()<br>
+<br>
+          fun save(task: String) {<br>
+              tasks.add(task)<br>
+          }<br>
+<br>
+
+          fun findAll(): List&lt;String&gt; {<br>
+              return tasks.toList()<br>
+          }<br>
+          
+      }<br>
+
+    </code>
+
+
+    <h3> Camada de Lógica (Service) </h3>
+    <p>Responsável pelas regras de negócio.</p>
+    <code>
+      class TaskService(private val repository: TaskRepository) {<br>
+          fun addTask(description: String) {<br>
+              if (description.isNotBlank()) {<br>
+                  repository.save(description)<br>
+                  println("Tarefa adicionada!")<br>
+              } else {<br>
+                  println("Erro: A tarefa não pode ser vazia.")<br>
+              }<br>
+          }<br>
+<br>
+          fun getAllTasks() {<br>
+              val tasks = repository.findAll()<br>
+              println("--- Tarefas ---")<br>
+              tasks.forEach { println("- $it") }<br>
+          }<br>
+      }<br>
+<br>
+
+    </code>
+    <h3> Camada de Apresentação (UI) </h3>
+    <p>Responsável pela interação com o usuário.</p>
+    <code>
+     
+      fun main() {<br>
+          val repository = TaskRepository()<br>
+          val service = TaskService(repository)<br>
+<br>
+
+          // Simula a interação do usuário
+          println("Adicionando tarefas...")<br>
+          service.addTask("Estudar Arquitetura em Camadas")<br>
+          service.addTask("") // Tentativa de adicionar tarefa vazia<br>
+          service.addTask("Implementar o exemplo")<br>
+          <br>
+          println("\nListando todas as tarefas:")<br>
+          service.getAllTasks()<br>
+      }<br>
+    </code>
+
+    <div class="diagram">
+      <div class="diagram-box">Apresentação<br>
+                               (UI)
+      </div>
+      <div class="line"></div>
+      <div class="diagram-box"> Lógica<br>
+                                (Service) 
+      </div>
+      <div class="line"></div>
+      <div class="diagram-box"> Dados<br>
+                                (Repository)
+       </div>
+    </div>
+
+    <li><strong>Microserviços</strong>: Sistema dividido em serviços pequenos e independentes. Alta escalabilidade e flexibilidade.</li>
+    <div class="example">
+      Um sistema de tarefas onde a criação, listagem e notificação são serviços separados que se comunicam via API.
+    </div>
+    <code>
+      // Serviço de Criação de Tarefas (TaskService)<br>
+      class TaskService {<br>
+          fun createTask(description: String) {<br>
+              // Lógica para criar tarefa<br>
+              println("Tarefa '$description' criada.")<br>
+          }<br>
+      }
+      <br>
+      // Serviço de Listagem de Tarefas (ListService)<br>
+      class ListService {<br>
+          fun listTasks() {<br>
+              // Lógica para listar tarefas<br>
+              println("Listando todas as tarefas...")<br>
+          }<br> 
+      }     
+      <br>
+      // Serviço de Notificação (NotificationService)<br>
+      class NotificationService {<br>
+          fun notifyTaskCreated(description: String) {<br>
+              // Lógica para notificar usuário<br>
+              println("Notificação: Tarefa '$description' foi criada.")<br>
+          }<br>
+      }<br>
+    </code>
+      
+    <div class="diagram">
+      <div class="diagram-box">TaskService<br>
+                               (Criação)
+      </div>
+      <div class="line"></div>
+      <div class="diagram-box">ListService<br>
+                                (Listagem)              
+      </div>
+      <div class="line"></div>
+      <div class="diagram-box">NotificationService<br>
+                                (Notificação)
+       </div>
+    </div>
+    </li>
+    
+
+      
+      <br>
+    <li><strong>Event-Driven</strong>: Baseada em eventos que disparam ações. Boa para sistemas assíncronos e reativos.</li>
   </ul>
-  <code>
-// Camada de Apresentação<br>
-public class TelaTarefas {<br>
-    private TarefaController controller;<br>
-<br>
-    public void mostrarTarefas() {<br>
-        System.out.println(controller.obterTodas());<br>
-    }<br>
-<br>
-    public void adicionarTarefa(String titulo) {<br>
-        controller.criarTarefa(titulo);<br>
-    }<br>
-}
-  </code>
-
-  <ul>
-    <li>Negócio (Business Logic / Controller)</li>
-    <p>Função: regras do sistema, validações.</p>
-  </ul>
-  <code>
-// Camada de Negócio<br>
-public class TarefaController {<br>
-    private TarefaRepository repository;<br>
-<br>
-    public TarefaController(TarefaRepository repo) {<br>
-        this.repository = repo;<br>
-    }<br>
-<br>
-    public void criarTarefa(String titulo) {<br>
-        if(titulo == null || titulo.isEmpty()) {<br>
-            System.out.println("Erro: título obrigatório");<br>
-            return;<br>
-        }<br>
-        repository.salvar(new Tarefa(titulo));<br>
-    }<br>
-<br>
-    public String obterTodas() {<br>
-        return repository.listarTodas().toString();<br>
-    }<br>
-}
-  </code>
-
-  <ul>
-    <li>Persistência / Dados</li>
-    <p>Função: acesso a dados.</p>
-  </ul>
-  <code>
-// Camada de Dados<br>
-import java.util.ArrayList;<br>
-import java.util.List;<br>
-<br>
-public class TarefaRepository {<br>
-    private List<Tarefa> tarefas = new ArrayList<>();<br>
-<br>
-    public void salvar(Tarefa t) {<br>
-        tarefas.add(t);<br>
-    }<br>
-<br>
-    public List<Tarefa> listarTodas() {<br>
-        return tarefas;<br>
-    }<br>
-}<br>
-<br>
-public class Tarefa {<br>
-    private String titulo;<br>
-    public Tarefa(String titulo) {<br>
-        this.titulo = titulo;<br>
-    }<br>
-    public String toString() {<br>
-        return titulo;<br>
-    }<br>
-}
-  </code>
-
-  <h3>3. Microserviços</h3>
-  <p>Sistema dividido em serviços independentes, cada um cuidando de uma funcionalidade.</p>
-  <div class="example">
-    Exemplo prático: AuthService, TaskService, NotificationService, cada um com sua própria classe e dados.
-  </div>
-  <code>
-// Microserviços Java puro<br>
-public class AuthService {<br>
-    public void autenticar() {<br>
-        System.out.println("Autenticando usuário...");<br>
-    }<br>
-}<br>
-<br>
-public class TaskService {<br>
-    public void criarTarefa(String titulo) {<br>
-        System.out.println("Criando tarefa: " + titulo);<br>
-    }<br>
-}<br>
-<br>
-public class NotificationService {<br>
-    public void enviarNotificacao(String msg) {<br>
-        System.out.println("Notificação: " + msg);<br>
-    }<br>
-}
-  </code>
-
-  <h3>4. Event-Driven (Orientada a Eventos)</h3>
-  <p>Sistema reage a eventos de forma assíncrona.</p>
-  <div class="example">
-    Exemplo prático: quando uma tarefa é criada, dispara evento e outros serviços reagem.
-  </div>
-  <code>
-// Event-Driven Java puro<br>
-public interface EventListener {<br>
-    void onEvento(String evento);<br>
-}<br>
-<br>
-public class NotificationListener implements EventListener {<br>
-    public void onEvento(String evento) {<br>
-        System.out.println("NotificationService recebeu: " + evento);<br>
-    }<br>
-}<br>
-<br>
-public class AppEventDriven {<br>
-    public static void main(String[] args) {<br>
-        NotificationListener listener = new NotificationListener();<br>
-        String evento = "Nova Tarefa Criada";<br>
-        listener.onEvento(evento);<br>
-    }<br>
-}
   </code>
 </section>
 
